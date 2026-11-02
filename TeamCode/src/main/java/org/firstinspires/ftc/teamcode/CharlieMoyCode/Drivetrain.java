@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.CharlieMoyCode;
 
 import static java.lang.Math.PI;
 import static java.lang.Math.abs;
@@ -122,7 +122,6 @@ public class Drivetrain{
         rightFrontDrive.setPower(rightFrontPower);
         rightBackDrive.setPower(rightBackPower);
     }
-
     public void setMotorPowers(double[] motorPowers){
         leftFrontDrive.setPower(motorPowers[0]);
         leftBackDrive.setPower(motorPowers[1]);

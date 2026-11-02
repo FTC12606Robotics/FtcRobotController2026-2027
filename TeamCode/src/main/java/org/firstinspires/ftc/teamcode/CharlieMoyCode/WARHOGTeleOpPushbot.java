@@ -1,12 +1,10 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.CharlieMoyCode;
 
 import static java.lang.Math.PI;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
-
-import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 @TeleOp(name="WARHOGTeleOpPushbot", group="")
 public class WARHOGTeleOpPushbot extends LinearOpMode {
@@ -17,7 +15,7 @@ public class WARHOGTeleOpPushbot extends LinearOpMode {
 
         //=====Set up classes=====
         Drivetrain drivetrain = new Drivetrain(hardwareMap, telemetry, "BHI260IMU");
-        AprilTagVision aprilTagVision = new AprilTagVision(hardwareMap);
+        //AprilTagVision aprilTagVision = new AprilTagVision(hardwareMap);
 
         //=====Set up variables=====
         double joyx, joyy, joyz, gas, brake, baseSpeed;
@@ -109,17 +107,17 @@ public class WARHOGTeleOpPushbot extends LinearOpMode {
 
 
             //==========April Tag Vision==========
-            AprilTagDetection detection = aprilTagVision.getBestTag();
+            //AprilTagDetection detection = aprilTagVision.getBestTag();
 
-            if (detection != null) {
-                telemetry.addData("Tag ID", detection.id);
+            //if (detection != null) {
+                //telemetry.addData("Tag ID", detection.id);
                 /*if (det.metadata != null) {
                     telemetry.addData("Range (m)", "%.2f", det.ftcPose.range);
                     telemetry.addData("Bearing (deg)", "%.1f", det.ftcPose.bearing);
                 }*/
-            } else {
-                telemetry.addLine("No tag detected");
-            }
+            //} else {
+            //    telemetry.addLine("No tag detected");
+            //}
             //==========April Tag Vision==========
 
 
@@ -128,6 +126,6 @@ public class WARHOGTeleOpPushbot extends LinearOpMode {
         }
 
         //Stop vision at the end
-        aprilTagVision.stop();
+        //aprilTagVision.stop();
     }
 }
