@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 // Set as human control, sorry AI :(
 @TeleOp(name="MastertestTeleOP", group="Linear Opmode")
-public class MastertestTeleOP extends LinearOpMode {
+public class TestTeleOP_DO_NOT_USE_FOR_MATCH extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
