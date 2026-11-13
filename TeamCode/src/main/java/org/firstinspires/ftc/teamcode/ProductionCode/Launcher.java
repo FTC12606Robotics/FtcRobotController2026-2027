@@ -37,13 +37,11 @@ public class Launcher {
     }
 
     /**
-     * Controls the motor using gamepad triggers and logs telemetry.
-     * Checks Gamepad 2 first; if idle, falls back to Gamepad 1 triggers.
-     * @param gamepad1 Gamepad 1 (Driver 1)
-     * @param gamepad2 Gamepad 2 (Driver 2)
+     * Controls the motor using single gamepad inputs.
+     * @param gamepad Gamepad instance (e.g. gamepad1 or gamepad2)
      * @param telemetry Telemetry instance to display status
      */
-    public void update(Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
+    public void update(Gamepad gamepad, Telemetry telemetry) {
         if (motor == null) {
             if (telemetry != null) {
                 telemetry.addData(nameofmotor, "NOT FOUND in robot config!");
@@ -51,28 +49,31 @@ public class Launcher {
             return;
         }
 
+        if (gamepad == null) {
+            return;
+        }
 
-        if (gamepad1.y){
+        if (gamepad.y) {
             power = -.85;
-            telemetry.addData("Launcher: Pollen", power);
-        } else if (gamepad1.b) {
+            if (telemetry != null) telemetry.addData("Launcher: Pollen", power);
+        } else if (gamepad.b) {
             power = -.75;
-            telemetry.addData("Launcher: Nectar", power);
+            if (telemetry != null) telemetry.addData("Launcher: Nectar", power);
         } else {
             power = 0;
-            telemetry.addData("Launcher Inactive", 0);
+            if (telemetry != null) telemetry.addData("Launcher Inactive", 0);
         }
         setPower(power);
-
-        if (telemetry != null) {
-
-        }
     }
 
     /**
-     * Overload for single-gamepad control.
+     * Overload for dual-gamepad control: checks gamepad2 (Operator) first, falls back to gamepad1 (Driver).
      */
-    public void update(Gamepad gamepad, Telemetry telemetry) {
-        update(gamepad, null, telemetry);
+    public void update(Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
+        if (gamepad2 != null && (gamepad2.y || gamepad2.b)) {
+            update(gamepad2, telemetry);
+        } else {
+            update(gamepad1, telemetry);
+        }
     }
 }

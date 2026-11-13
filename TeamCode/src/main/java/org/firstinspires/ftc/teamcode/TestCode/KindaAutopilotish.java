@@ -46,8 +46,10 @@ public class KindaAutopilotish extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Auto Instructions
-            GoForward(90);
-
+            GoForward(20);
+            Turn(true);
+            Turn(true);
+            GoForward(15);
 
         }
     }

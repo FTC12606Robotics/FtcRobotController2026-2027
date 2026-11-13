@@ -17,6 +17,8 @@ public class ProductionTeleOP extends LinearOpMode {
         Drivetrain drivetrain = new Drivetrain(hardwareMap, telemetry, "BNO055IMU");
         Intake intakeMotor = new Intake(hardwareMap, "Intakemotor");
         Launcher launcherMotor = new Launcher(hardwareMap, "launchMotor#");
+        IronCross ironCross = new IronCross(hardwareMap, "ironCross");
+        BallPusher ballPusher = new BallPusher(hardwareMap, "piston");
         //AprilTagVision aprilTagVision = new AprilTagVision(hardwareMap);
 
         //=====Set up variables=====
@@ -85,11 +87,13 @@ public class ProductionTeleOP extends LinearOpMode {
             joyx = -currentGamepad1.left_stick_x;
             joyy = currentGamepad1.left_stick_y;
             joyz = currentGamepad1.right_stick_x;
-            gas = -currentGamepad1.right_trigger*(1-baseSpeed);
+            gas = currentGamepad1.right_trigger*(1-baseSpeed);
             brake = -currentGamepad1.left_trigger*(baseSpeed);
+
             intakeMotor.update(currentGamepad1, currentGamepad2, telemetry);
             launcherMotor.update(currentGamepad1, currentGamepad2, telemetry);
-
+            ironCross.update(currentGamepad1, currentGamepad2, telemetry);
+            ballPusher.update(currentGamepad1, currentGamepad2, telemetry);
             //print vectors
             telemetry.addData("y: ", joyy);
             telemetry.addData("x: ", joyx);

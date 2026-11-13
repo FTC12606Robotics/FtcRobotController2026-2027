@@ -37,13 +37,11 @@ public class Intake {
     }
 
     /**
-     * Controls the motor using gamepad triggers and logs telemetry.
-     * Checks Gamepad 2 first; if idle, falls back to Gamepad 1 triggers.
-     * @param gamepad1 Gamepad 1 (Driver 1)
-     * @param gamepad2 Gamepad 2 (Driver 2)
+     * Controls the motor using single gamepad inputs.
+     * @param gamepad Gamepad instance (e.g. gamepad1 or gamepad2)
      * @param telemetry Telemetry instance to display status
      */
-    public void update(Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
+    public void update(Gamepad gamepad, Telemetry telemetry) {
         if (motor == null) {
             if (telemetry != null) {
                 telemetry.addData(nameofmotor, "NOT FOUND in robot config!");
@@ -51,26 +49,31 @@ public class Intake {
             return;
         }
 
-
-        if (gamepad1.a){
-            power = -.5;
-            telemetry.addData("Intake_Power", power);
+        if (gamepad == null) {
+            return;
         }
-        else {
+
+        if (gamepad.a) {
+            power = -0.5;
+            if (telemetry != null) telemetry.addData("Intake_Power", power);
+        } else if (gamepad.x) {
+            power = 0.5;
+            if (telemetry != null) telemetry.addData("Intake_Power", power);
+        } else {
             power = 0;
-            telemetry.addData("Intake_Off", power);
+            if (telemetry != null) telemetry.addData("Intake_Off", power);
         }
         setPower(power);
-
-        if (telemetry != null) {
-
-        }
     }
 
     /**
-     * Overload for single-gamepad control.
+     * Overload for dual-gamepad control: checks gamepad2 (Operator) first, falls back to gamepad1 (Driver).
      */
-    public void update(Gamepad gamepad, Telemetry telemetry) {
-        update(gamepad, null, telemetry);
+    public void update(Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
+        if (gamepad2 != null && (gamepad2.a || gamepad2.x)) {
+            update(gamepad2, telemetry);
+        } else {
+            update(gamepad1, telemetry);
+        }
     }
 }
